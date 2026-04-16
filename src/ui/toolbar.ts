@@ -37,7 +37,7 @@ export class Toolbar {
     html += '<div class="separator"></div>';
     html += '<button id="feed-nest-btn">Inject Energy (nest)</button>';
     html += '</div>';
-    container.innerHTML += html;
+    container.insertAdjacentHTML('beforeend', html);
 
     for (const [id] of tools) {
       const btn = document.getElementById(`tool-${id}`)!;

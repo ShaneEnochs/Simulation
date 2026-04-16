@@ -80,8 +80,7 @@ export class Game {
       this.colony, this.toolbar, this.inspector, this.pool
     );
 
-    this.camera.centerOn(nestX, nestY, canvas.width, canvas.height);
-
+    // camera.centerOn is called after resize() in main.ts via handleResize()
     this.spawnInitialAgents();
     this.showOnboarding();
     this.restoreBestLineage();
@@ -125,6 +124,10 @@ export class Game {
     };
     this.canvas.addEventListener('click', dismiss);
     setTimeout(() => { overlay.remove(); localStorage.setItem(ONBOARDING_KEY, '1'); }, 5000);
+  }
+
+  handleResize(w: number, h: number): void {
+    this.camera.centerOn(this.colony.nestX, this.colony.nestY, w, h);
   }
 
   start(): void {

@@ -7,6 +7,7 @@ const GENE_LABELS = ['Sensor Angle', 'Sensor Dist', 'Rotation', 'Speed', 'Deposi
 
 export class GeneChart {
   private fills: HTMLElement[] = [];
+  private vals: HTMLElement[] = [];
   private lastUpdate = 0;
 
   constructor(container: HTMLElement) {
@@ -20,10 +21,11 @@ export class GeneChart {
         </div>`;
     }
     html += '</div>';
-    container.innerHTML += html;
+    container.insertAdjacentHTML('beforeend', html);
 
     for (let i = 0; i < GENE_NAMES.length; i++) {
       this.fills.push(document.getElementById(`gene-fill-${i}`)!);
+      this.vals.push(document.getElementById(`gene-val-${i}`)!);
     }
   }
 
@@ -34,18 +36,15 @@ export class GeneChart {
     for (let i = 0; i < GENE_NAMES.length; i++) {
       const key = GENE_NAMES[i];
       const val = avgGenes[key];
-      const fill = this.fills[i];
-      fill.style.width = (val * 100).toFixed(1) + '%';
 
+      this.fills[i].style.width = (val * 100).toFixed(1) + '%';
       if (key === 'hue') {
-        fill.style.backgroundColor = `hsl(${val * 360},70%,55%)`;
+        this.fills[i].style.backgroundColor = `hsl(${val * 360},70%,55%)`;
       } else {
         const lightness = 35 + val * 30;
-        fill.style.backgroundColor = `hsl(200,60%,${lightness}%)`;
+        this.fills[i].style.backgroundColor = `hsl(200,60%,${lightness}%)`;
       }
-
-      const valEl = document.getElementById(`gene-val-${i}`);
-      if (valEl) valEl.textContent = val.toFixed(2);
+      this.vals[i].textContent = val.toFixed(2);
     }
   }
 }

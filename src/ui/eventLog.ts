@@ -3,10 +3,10 @@ export class EventLog {
   private el: HTMLElement;
 
   constructor(container: HTMLElement) {
-    container.innerHTML += `<div id="event-log">
+    container.insertAdjacentHTML('beforeend', `<div id="event-log">
       <div class="section-title">Events</div>
       <div id="event-log-entries"></div>
-    </div>`;
+    </div>`);
     this.el = document.getElementById('event-log-entries')!;
   }
 
