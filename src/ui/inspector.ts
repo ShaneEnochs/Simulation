@@ -7,14 +7,16 @@ const GENE_LABELS = ['Sensor Angle', 'Sensor Dist', 'Rotation', 'Speed', 'Deposi
 
 export class Inspector {
   private panel: HTMLElement;
+  private content: HTMLElement;
   inspectedIndex: number | null = null;
 
   constructor(container: HTMLElement) {
-    container.innerHTML += `<div id="inspector" style="display:none">
+    container.insertAdjacentHTML('beforeend', `<div id="inspector" style="display:none">
       <div class="section-title">Agent Inspector</div>
       <div id="inspector-content"></div>
-    </div>`;
+    </div>`);
     this.panel = document.getElementById('inspector')!;
+    this.content = document.getElementById('inspector-content')!;
   }
 
   inspect(agent: Agent | null, index: number | null): void {
@@ -25,7 +27,7 @@ export class Inspector {
     }
     this.panel.style.display = 'block';
     const g = agent.genes;
-    let html = `<div>Gen: ${agent.generation} | Age: ${agent.age} | ${agent.carryingFood ? '🍄 Carrying' : 'Searching'}</div>`;
+    let html = `<div>Gen: ${agent.generation} | Age: ${agent.age} | ${agent.carryingFood ? 'Carrying' : 'Searching'}</div>`;
     html += '<div class="gene-inspector">';
     for (let i = 0; i < GENE_NAMES.length; i++) {
       const key = GENE_NAMES[i];
@@ -38,7 +40,7 @@ export class Inspector {
       </div>`;
     }
     html += '</div>';
-    document.getElementById('inspector-content')!.innerHTML = html;
+    this.content.innerHTML = html;
   }
 
   dismiss(): void {

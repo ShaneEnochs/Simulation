@@ -10,7 +10,7 @@ export class HUD {
   private timeEl: HTMLElement;
 
   constructor(container: HTMLElement) {
-    container.innerHTML += `
+    container.insertAdjacentHTML('beforeend', `
       <div id="hud">
         <div class="hud-label">Colony Energy</div>
         <div id="energy-bar"><div id="energy-fill"></div></div>
@@ -19,7 +19,7 @@ export class HUD {
         <div class="hud-row"><span class="hud-label">Food Collected</span><span id="hud-food">0</span></div>
         <div class="hud-row"><span class="hud-label">Time</span><span id="hud-time">0:00</span></div>
       </div>
-    `;
+    `);
     this.energyFill = document.getElementById('energy-fill')!;
     this.genEl = document.getElementById('hud-gen')!;
     this.popEl = document.getElementById('hud-pop')!;
