@@ -1,0 +1,236 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0a0a0a;
+  color: #ccc;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  overflow: hidden;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#canvas {
+  flex: 1 1 auto;
+  display: block;
+  cursor: crosshair;
+}
+
+#ui {
+  width: 220px;
+  flex: 0 0 220px;
+  background: #111;
+  border-left: 1px solid #333;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* HUD */
+#hud {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+}
+
+#energy-bar {
+  width: 100%;
+  height: 12px;
+  background: #222;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 4px 0 8px;
+}
+
+#energy-fill {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s, background-color 0.5s;
+  border-radius: 3px;
+}
+
+.hud-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 0;
+  color: #aaa;
+}
+
+.hud-label {
+  color: #666;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Gene Chart */
+#gene-chart {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+}
+
+.gene-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+
+.gene-label {
+  color: #777;
+  font-size: 10px;
+  width: 72px;
+  flex: 0 0 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gene-bar-bg {
+  flex: 1 1 auto;
+  height: 8px;
+  background: #222;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.gene-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: #4080c0;
+  transition: width 0.4s;
+}
+
+.gene-val {
+  color: #888;
+  font-size: 9px;
+  width: 28px;
+  text-align: right;
+}
+
+/* Toolbar */
+#toolbar {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tool-btn, #feed-nest-btn {
+  background: #1a1a1a;
+  color: #aaa;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  text-align: left;
+  transition: background 0.15s;
+  width: 100%;
+}
+
+.tool-btn:hover, #feed-nest-btn:hover {
+  background: #222;
+  color: #ddd;
+}
+
+.tool-btn.active {
+  background: #1a3a1a;
+  border-color: #4caf50;
+  color: #8dff91;
+}
+
+.speed-row {
+  display: flex;
+  gap: 3px;
+}
+
+.speed-btn {
+  flex: 1;
+  background: #1a1a1a;
+  color: #aaa;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 4px 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  text-align: center;
+  transition: background 0.15s;
+}
+
+.speed-btn:hover { background: #222; color: #ddd; }
+.speed-btn.active { background: #1a3060; border-color: #4080d0; color: #80b0ff; }
+
+.separator { height: 1px; background: #222; margin: 4px 0; }
+
+label {
+  color: #888;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+label input { cursor: pointer; }
+
+.section-title {
+  color: #555;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+/* Inspector */
+#inspector {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+}
+
+.gene-inspector { margin-top: 6px; }
+
+/* Event Log */
+#event-log {
+  padding: 10px;
+  flex: 1 1 auto;
+}
+
+#event-log-entries {
+  margin-top: 4px;
+}
+
+.event-entry {
+  color: #88aacc;
+  font-size: 10px;
+  padding: 2px 0;
+  border-bottom: 1px solid #1a1a1a;
+  transition: opacity 0.5s;
+}
+
+/* Onboarding overlay */
+#onboarding {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.75);
+  color: #eee;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 14px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+}
