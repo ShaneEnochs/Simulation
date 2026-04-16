@@ -28,7 +28,7 @@ export class AgentRenderer {
     inspectedIndex: number | null
   ): void {
     const cellSize = CONFIG.CELL_RENDER_SIZE * camera.zoom;
-    const radius = Math.max(1.5, cellSize * 0.35);
+    const radius = Math.max(2, cellSize * 0.5);
 
     pool.forEachActive((agent, i) => {
       const [sx, sy] = camera.worldToScreen(agent.x, agent.y);

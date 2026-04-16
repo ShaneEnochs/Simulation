@@ -45,6 +45,7 @@ export class Game {
 
   private milestoneFlags = new Set<number>();
   private popMilestones = new Set<number>([50, 100, 200, 500, 1000]);
+  private bestLineageSaved = false;
 
   constructor(canvas: HTMLCanvasElement, uiContainer: HTMLElement) {
     this.canvas = canvas;
@@ -112,30 +113,37 @@ export class Game {
   }
 
   private showOnboarding(): void {
-    if (localStorage.getItem(ONBOARDING_KEY)) return;
+    let seen = false;
+    try { seen = !!localStorage.getItem(ONBOARDING_KEY); } catch { /* blocked */ }
+    if (seen) return;
     const overlay = document.createElement('div');
     overlay.id = 'onboarding';
     overlay.textContent = 'Click to place food. Watch your colony find it.';
     document.body.appendChild(overlay);
     const dismiss = () => {
       overlay.remove();
-      localStorage.setItem(ONBOARDING_KEY, '1');
+      try { localStorage.setItem(ONBOARDING_KEY, '1'); } catch { /* blocked */ }
       this.canvas.removeEventListener('click', dismiss);
     };
     this.canvas.addEventListener('click', dismiss);
-    setTimeout(() => { overlay.remove(); localStorage.setItem(ONBOARDING_KEY, '1'); }, 5000);
+    setTimeout(() => {
+      overlay.remove();
+      try { localStorage.setItem(ONBOARDING_KEY, '1'); } catch { /* blocked */ }
+    }, 5000);
   }
 
   handleResize(w: number, h: number): void {
     this.camera.centerOn(this.colony.nestX, this.colony.nestY, w, h);
   }
 
+  private readonly boundLoop = (now: number) => this.loop(now);
+
   start(): void {
-    requestAnimationFrame(this.loop.bind(this));
+    requestAnimationFrame(this.boundLoop);
   }
 
   private loop(now: number): void {
-    requestAnimationFrame(this.loop.bind(this));
+    requestAnimationFrame(this.boundLoop);
 
     const dt = Math.min(now - this.lastTime, 50);
     this.lastTime = now;
@@ -194,8 +202,9 @@ export class Game {
       }
     }
 
-    // Save best lineage on agent death if game over
-    if (this.colony.isGameOver) {
+    // Save best lineage once when game ends
+    if (this.colony.isGameOver && !this.bestLineageSaved) {
+      this.bestLineageSaved = true;
       this.saveBestLineage();
     }
   }

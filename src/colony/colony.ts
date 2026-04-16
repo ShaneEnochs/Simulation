@@ -41,7 +41,8 @@ export class Colony {
     const pop = pool.count();
     this.energy -= CONFIG.COLONY_DRAIN_PER_AGENT * pop;
 
-    if (this.energy <= 0 && pop === 0) {
+    // Game over if no agents AND not enough energy for reproduction to matter
+    if (pop === 0 && this.energy < CONFIG.REPRODUCTION_THRESHOLD) {
       this.isGameOver = true;
       onLog('Colony has died. All agents lost.');
       return;
